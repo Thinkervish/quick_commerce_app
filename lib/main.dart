@@ -17,8 +17,8 @@ class TestHomeApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Home Test',
-        initialRoute: '/',
+        title: 'Campus Connect',
+        initialRoute: '/register',  // Show registration page first
         routes: {
           '/': (context) => HomeScreen(),
           '/register': (context) => RegistrationScreen(),
