@@ -15,31 +15,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _collegeController = TextEditingController();
 
-  Future<void> registerUser() async {
-    if (_formKey.currentState!.validate()) {
-      final response = await http.post(
-        Uri.parse('http://your-backend-url/register'),  // Replace with your backend URL
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'name': _nameController.text,
-          'register_number': _regNoController.text,
-          'phone_number': _phoneController.text,
-          'email': _emailController.text,
-          'college_name': _collegeController.text,
-        }),
+ Future<void> registerUser() async {
+  if (_formKey.currentState!.validate()) {
+    final response = await http.post(
+      Uri.parse('http://your-backend-url/register'),  // Replace with your backend URL
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': _nameController.text,
+        'register_number': _regNoController.text,
+        'phone_number': _phoneController.text,
+        'email': _emailController.text,
+        'college_name': _collegeController.text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration successful!')),
       );
 
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration successful!')),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration failed. Try again.')),
-        );
-      }
+      // Navigate to Home Page after successful registration
+      Navigator.pushReplacementNamed(context, '/');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration failed. Try again.')),
+      );
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {
